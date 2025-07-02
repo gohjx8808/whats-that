@@ -1,19 +1,12 @@
 import typographyStyles from "@/assets/styles/typographyStyles";
-import { StyleSheet, View } from "react-native";
-import { IconButton, Text, useTheme } from "react-native-paper";
+import GeneralView from "@/components/GeneralView";
+import { router } from "expo-router";
+import { StyleSheet } from "react-native";
+import { IconButton, Text } from "react-native-paper";
 
 export default function Index() {
-  const { colors } = useTheme();
-
   return (
-    <View
-      style={[
-        styles.rootContainer,
-        {
-          backgroundColor: colors.background,
-        },
-      ]}
-    >
+    <GeneralView style={styles.rootContainer}>
       <Text variant="displaySmall" style={typographyStyles.boldText}>
         What&apos;s That?
       </Text>
@@ -23,9 +16,9 @@ export default function Index() {
       <IconButton
         icon="camera-outline"
         size={100}
-        onPress={() => console.log("Pressed")}
+        onPress={() => router.push("/objectDetectionCamera")}
       />
-    </View>
+    </GeneralView>
   );
 }
 
