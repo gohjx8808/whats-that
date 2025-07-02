@@ -3,7 +3,7 @@ import { CameraView, useCameraPermissions } from "expo-camera";
 import { router } from "expo-router";
 import { useRef } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { Button, Icon, Text, useTheme } from "react-native-paper";
+import { Button, Icon, IconButton, Text, useTheme } from "react-native-paper";
 
 const ObjectDetectionCamera = () => {
   const [permission, requestPermission] = useCameraPermissions();
@@ -54,7 +54,15 @@ const ObjectDetectionCamera = () => {
     <View style={styles.container}>
       <CameraView style={styles.camera} ref={cameraRef}>
         <View style={styles.controlContainer}>
-          <View></View>
+          <View style={styles.closeBtnContainer}>
+            <IconButton
+              onPress={() => router.back()}
+              icon="close"
+              size={35}
+              iconColor="white"
+              containerColor="#00000080"
+            />
+          </View>
           <TouchableOpacity onPress={takePicture} style={styles.snapButton}>
             <Icon source="circle" size={70} color="white" />
           </TouchableOpacity>
@@ -80,7 +88,8 @@ const styles = StyleSheet.create({
   },
   controlContainer: {
     flex: 1,
-    margin: 60,
+    marginVertical: 60,
+    marginHorizontal: 20,
     justifyContent: "space-between",
     alignItems: "center",
   },
@@ -101,5 +110,9 @@ const styles = StyleSheet.create({
     borderColor: "white",
     borderWidth: 4,
     borderRadius: 100,
+  },
+  closeBtnContainer: {
+    width: "100%",
+    alignItems: "flex-end",
   },
 });
