@@ -1,12 +1,20 @@
 import GeneralView from "@/components/GeneralView";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import { router } from "expo-router";
+import { useRef } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Button, Icon, Text, useTheme } from "react-native-paper";
 
 const ObjectDetectionCamera = () => {
   const [permission, requestPermission] = useCameraPermissions();
   const { colors } = useTheme();
+
+  const cameraRef = useRef<CameraView>(null);
+
+  const takePicture = async () => {
+    const result = await cameraRef.current?.takePictureAsync();
+    console.log(result);
+  };
 
   if (!permission) {
     return <View />;
@@ -44,10 +52,11 @@ const ObjectDetectionCamera = () => {
 
   return (
     <View style={styles.container}>
-      <CameraView style={styles.camera} >
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={()=>{}}>
-            <Text style={styles.text}>Flip Camera</Text>
+      <CameraView style={styles.camera} ref={cameraRef}>
+        <View style={styles.controlContainer}>
+          <View></View>
+          <TouchableOpacity onPress={takePicture} style={styles.snapButton}>
+            <Icon source="circle" size={70} color="white" />
           </TouchableOpacity>
         </View>
       </CameraView>
@@ -69,21 +78,11 @@ const styles = StyleSheet.create({
   camera: {
     flex: 1,
   },
-  buttonContainer: {
+  controlContainer: {
     flex: 1,
-    flexDirection: "row",
-    backgroundColor: "transparent",
-    margin: 64,
-  },
-  button: {
-    flex: 1,
-    alignSelf: "flex-end",
+    margin: 60,
+    justifyContent: "space-between",
     alignItems: "center",
-  },
-  text: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "white",
   },
   permissionContainer: {
     justifyContent: "center",
@@ -96,5 +95,11 @@ const styles = StyleSheet.create({
   permissionButtonContainer: {
     width: "100%",
     gap: 10,
+  },
+  snapButton: {
+    backgroundColor: "black",
+    borderColor: "white",
+    borderWidth: 4,
+    borderRadius: 100,
   },
 });
