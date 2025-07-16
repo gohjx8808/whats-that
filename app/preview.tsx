@@ -1,4 +1,3 @@
-import GeneralView from "@/components/GeneralView";
 import { Image } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect } from "react";
@@ -22,9 +21,7 @@ const Preview = () => {
   }, [params.imageUrl, ssdLite]);
 
   return (
-    <GeneralView>
       <Image source={params.imageUrl} style={{ flex: 1, width: "100%" }} />
-    </GeneralView>
   );
 };
 

@@ -1,4 +1,3 @@
-import GeneralView from "@/components/GeneralView";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import { router } from "expo-router";
 import { useRef } from "react";
@@ -23,30 +22,28 @@ const ObjectDetectionCamera = () => {
   if (!permission.granted) {
     // Camera permissions are not granted yet.
     return (
-      <GeneralView style={styles.container}>
-        <View
-          style={[
-            styles.permissionContainer,
-            { backgroundColor: colors.surfaceVariant },
-          ]}
-        >
-          <Icon source="camera" size={100} />
-          <Text style={styles.message} variant="headlineMedium">
-            Allow Camera Access?
-          </Text>
-          <Text style={styles.message} variant="titleMedium">
-            We need access to your camera to let you take photo.
-          </Text>
-          <View style={styles.permissionButtonContainer}>
-            <Button mode="contained" onPress={requestPermission}>
-              Allow
-            </Button>
-            <Button mode="outlined" onPress={() => router.back()}>
-              Not Now
-            </Button>
-          </View>
+      <View
+        style={[
+          styles.permissionContainer,
+          { backgroundColor: colors.surfaceVariant },
+        ]}
+      >
+        <Icon source="camera" size={100} />
+        <Text style={styles.message} variant="headlineMedium">
+          Allow Camera Access?
+        </Text>
+        <Text style={styles.message} variant="titleMedium">
+          We need access to your camera to let you take photo.
+        </Text>
+        <View style={styles.permissionButtonContainer}>
+          <Button mode="contained" onPress={requestPermission}>
+            Allow
+          </Button>
+          <Button mode="outlined" onPress={() => router.back()}>
+            Not Now
+          </Button>
         </View>
-      </GeneralView>
+      </View>
     );
   }
 
