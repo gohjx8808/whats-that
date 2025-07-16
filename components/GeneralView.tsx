@@ -8,7 +8,7 @@ const GeneralView = (props: ViewProps) => {
   return (
     <View
       {...remainingProps}
-      style={[{ backgroundColor: colors.background }, style]}
+      style={[{ backgroundColor: colors.background,flex:1 }, style]}
     >
       {children}
     </View>

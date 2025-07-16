@@ -13,7 +13,7 @@ const ObjectDetectionCamera = () => {
 
   const takePicture = async () => {
     const result = await cameraRef.current?.takePictureAsync();
-    console.log(result);
+    router.push({ pathname: "/preview", params: { imageUrl: result?.uri } });
   };
 
   if (!permission) {
