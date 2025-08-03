@@ -49,7 +49,8 @@ const ObjectDetectionCamera = () => {
 
   return (
     <View style={styles.container}>
-      <CameraView style={styles.camera} ref={cameraRef}>
+      <CameraView style={styles.camera} ref={cameraRef} />
+      <View style={StyleSheet.absoluteFill}>
         <View style={styles.controlContainer}>
           <View style={styles.closeBtnContainer}>
             <IconButton
@@ -64,7 +65,7 @@ const ObjectDetectionCamera = () => {
             <Icon source="circle" size={70} color="white" />
           </TouchableOpacity>
         </View>
-      </CameraView>
+      </View>
     </View>
   );
 };
