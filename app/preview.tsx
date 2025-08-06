@@ -57,6 +57,7 @@ const Preview = () => {
               {
                 aspectRatio:
                   actualImageDimension.width / actualImageDimension.height,
+                maxHeight: "100%",
               },
             ]}
             onLayout={(event) => {

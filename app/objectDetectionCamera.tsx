@@ -1,3 +1,4 @@
+import { useIsFocused } from "@react-navigation/native";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import { router } from "expo-router";
 import { useRef } from "react";
@@ -7,6 +8,7 @@ import { Button, Icon, IconButton, Text, useTheme } from "react-native-paper";
 const ObjectDetectionCamera = () => {
   const [permission, requestPermission] = useCameraPermissions();
   const { colors } = useTheme();
+  const isFocused = useIsFocused();
 
   const cameraRef = useRef<CameraView>(null);
 
@@ -49,7 +51,7 @@ const ObjectDetectionCamera = () => {
 
   return (
     <View style={styles.container}>
-      <CameraView style={styles.camera} ref={cameraRef} />
+      {isFocused && <CameraView style={styles.camera} ref={cameraRef} />}
       <View style={StyleSheet.absoluteFill}>
         <View style={styles.controlContainer}>
           <View style={styles.closeBtnContainer}>
