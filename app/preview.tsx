@@ -12,8 +12,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const Preview = () => {
   const params = useLocalSearchParams<{ imageUrl: string }>();
-  const test =
-    "https://i.guim.co.uk/img/media/327aa3f0c3b8e40ab03b4ae80319064e401c6fbc/377_133_3542_2834/master/3542.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=34d32522f47e4a67286f9894fc81c863";
+  // const test =
+  //   "https://i.guim.co.uk/img/media/327aa3f0c3b8e40ab03b4ae80319064e401c6fbc/377_133_3542_2834/master/3542.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=34d32522f47e4a67286f9894fc81c863";
   const ssdLite = useObjectDetection({
     modelSource: SSDLITE_320_MOBILENET_V3_LARGE,
   });
@@ -30,14 +30,14 @@ const Preview = () => {
 
   useEffect(() => {
     const getImageDimension = async () => {
-      const dimension = await RNImage.getSize(test);
+      const dimension = await RNImage.getSize(params.imageUrl);
       setActualImageDimension(dimension);
     };
     getImageDimension();
-  }, []);
+  }, [params.imageUrl]);
 
   const detectObject = async () => {
-    const detection = await ssdLite.forward(test);
+    const detection = await ssdLite.forward(params.imageUrl);
     setDetectResult(detection);
   };
 
@@ -50,7 +50,7 @@ const Preview = () => {
       <View style={[styles.contentContainer, { paddingBottom: bottom }]}>
         <View style={{ flex: 1, justifyContent: "center" }}>
           <Image
-            source={test}
+            source={params.imageUrl}
             contentFit="contain"
             style={[
               styles.image,
