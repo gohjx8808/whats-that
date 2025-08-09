@@ -1,3 +1,5 @@
+import { CustomModal } from "@/components/common";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
@@ -25,6 +27,7 @@ const Preview = () => {
     height: 0,
     width: 0,
   });
+  const [isEmptyModalVisible, setIsEmptyModalVisible] = useState(false);
 
   const { bottom } = useSafeAreaInsets();
 
@@ -38,7 +41,15 @@ const Preview = () => {
 
   const detectObject = async () => {
     const detection = await ssdLite.forward(params.imageUrl);
+    if (detection.length === 0) {
+      setIsEmptyModalVisible(true);
+    }
     setDetectResult(detection);
+  };
+
+  const onRetry = () => {
+    setIsEmptyModalVisible(false);
+    router.push("/objectDetectionCamera");
   };
 
   return (
@@ -115,6 +126,17 @@ const Preview = () => {
           Detect Object
         </Button>
       </View>
+      <CustomModal
+        visible={isEmptyModalVisible}
+        onDismiss={() => setIsEmptyModalVisible(false)}
+        onAction={onRetry}
+        actionTitle="Capture Again"
+        title="No Objects Detected"
+        description="Try adjusting lighting, moving closer, or making sure the object is fully visible."
+        Icon={
+          <MaterialCommunityIcons name="alert-circle" size={50} color="red" />
+        }
+      />
     </>
   );
 };

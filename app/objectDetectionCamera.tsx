@@ -56,7 +56,7 @@ const ObjectDetectionCamera = () => {
         <View style={styles.controlContainer}>
           <View style={styles.closeBtnContainer}>
             <IconButton
-              onPress={() => router.back()}
+              onPress={() => router.replace('/')}
               icon="close"
               size={35}
               iconColor="white"
