@@ -1,9 +1,33 @@
 import typographyStyles from "@/assets/styles/typographyStyles";
+import {
+  launchImageLibraryAsync,
+  useMediaLibraryPermissions,
+} from "expo-image-picker";
 import { router } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { Divider, IconButton, Text } from "react-native-paper";
 
 export default function Index() {
+  const [status, requestPermission] = useMediaLibraryPermissions();
+
+  const pickImage = async () => {
+    let permissionGranted = status?.granted;
+    if (!permissionGranted) {
+      permissionGranted = (await requestPermission()).granted;
+    }
+
+    if (permissionGranted) {
+      const result = await launchImageLibraryAsync();
+
+      if (!result.canceled) {
+        router.push({
+          pathname: "/preview",
+          params: { imageUrl: result.assets[0].uri },
+        });
+      }
+    }
+  };
+
   return (
     <View style={styles.rootContainer}>
       <Text variant="displaySmall" style={typographyStyles.boldText}>
@@ -19,7 +43,7 @@ export default function Index() {
           onPress={() => router.push("/objectDetectionCamera")}
         />
         <Divider style={styles.divider} />
-        <IconButton icon="image-outline" size={100} onPress={() => {}} />
+        <IconButton icon="image-outline" size={100} onPress={pickImage} />
       </View>
     </View>
   );
