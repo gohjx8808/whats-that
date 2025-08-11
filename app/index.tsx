@@ -5,7 +5,7 @@ import {
 } from "expo-image-picker";
 import { router } from "expo-router";
 import { StyleSheet, View } from "react-native";
-import { Divider, IconButton, Text } from "react-native-paper";
+import { Divider, HelperText, IconButton, Text } from "react-native-paper";
 
 export default function Index() {
   const [status, requestPermission] = useMediaLibraryPermissions();
@@ -30,20 +30,34 @@ export default function Index() {
 
   return (
     <View style={styles.rootContainer}>
-      <Text variant="displaySmall" style={typographyStyles.boldText}>
-        What&apos;s That?
+      <Text
+        variant="headlineMedium"
+        style={[typographyStyles.boldText, typographyStyles.centerText]}
+      >
+        Discover What&apos;s Around You
       </Text>
       <Text variant="titleLarge" style={typographyStyles.centerText}>
-        Snap or upload a photo to instantly identify objects around you.
+        Snap a photo or choose one from your gallery — we&apos;ll tell you what
+        it is in seconds.
       </Text>
-      <View style={styles.buttonContainer}>
-        <IconButton
-          icon="camera"
-          size={100}
-          onPress={() => router.push("/objectDetectionCamera")}
-        />
+      <View style={styles.actionContainer}>
+        <View style={styles.buttonContainer}>
+          <IconButton
+            icon="camera"
+            size={100}
+            onPress={() => router.push("/objectDetectionCamera")}
+          />
+          <Text style={typographyStyles.italicText}>
+            Snap and discover instantly
+          </Text>
+        </View>
         <Divider style={styles.divider} />
-        <IconButton icon="image-outline" size={100} onPress={pickImage} />
+        <View style={styles.buttonContainer}>
+          <IconButton icon="image-outline" size={100} onPress={pickImage} />
+          <Text style={typographyStyles.italicText}>
+            Choose an existing photo
+          </Text>
+        </View>
       </View>
     </View>
   );
@@ -53,13 +67,16 @@ const styles = StyleSheet.create({
   rootContainer: {
     paddingHorizontal: 30,
     alignItems: "center",
-    gap: 20,
+    gap: 25,
   },
   divider: {
     width: "100%",
-    height: 0.5,
+    height: 1,
   },
   buttonContainer: {
+    alignItems: "center",
+  },
+  actionContainer: {
     gap: 30,
     width: "100%",
     alignItems: "center",

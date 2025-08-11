@@ -7,4 +7,7 @@ export default StyleSheet.create({
   boldText: {
     fontWeight: "bold",
   },
+  italicText: {
+    fontStyle: "italic",
+  },
 });
