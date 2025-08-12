@@ -22,7 +22,7 @@ export default function Index() {
       if (!result.canceled) {
         router.push({
           pathname: "/preview",
-          params: { imageUrl: result.assets[0].uri },
+          params: { imageUrl: result.assets[0].uri, originScreen: "gallery" },
         });
       }
     }

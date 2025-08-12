@@ -13,7 +13,10 @@ import { Appbar, Button, Text } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const Preview = () => {
-  const params = useLocalSearchParams<{ imageUrl: string }>();
+  const { imageUrl, originScreen } = useLocalSearchParams<{
+    imageUrl: string;
+    originScreen: "camera" | "gallery";
+  }>();
   // const test =
   //   "https://i.guim.co.uk/img/media/327aa3f0c3b8e40ab03b4ae80319064e401c6fbc/377_133_3542_2834/master/3542.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=34d32522f47e4a67286f9894fc81c863";
   const ssdLite = useObjectDetection({
@@ -33,14 +36,14 @@ const Preview = () => {
 
   useEffect(() => {
     const getImageDimension = async () => {
-      const dimension = await RNImage.getSize(params.imageUrl);
+      const dimension = await RNImage.getSize(imageUrl);
       setActualImageDimension(dimension);
     };
     getImageDimension();
-  }, [params.imageUrl]);
+  }, [imageUrl]);
 
   const detectObject = async () => {
-    const detection = await ssdLite.forward(params.imageUrl);
+    const detection = await ssdLite.forward(imageUrl);
     if (detection.length === 0) {
       setIsEmptyModalVisible(true);
     }
@@ -49,7 +52,7 @@ const Preview = () => {
 
   const onRetry = () => {
     setIsEmptyModalVisible(false);
-    router.push("/objectDetectionCamera");
+    router.push(originScreen === "camera" ? "/objectDetectionCamera" : "/");
   };
 
   return (
@@ -61,7 +64,7 @@ const Preview = () => {
       <View style={[styles.contentContainer, { paddingBottom: bottom }]}>
         <View style={{ flex: 1, justifyContent: "center" }}>
           <Image
-            source={params.imageUrl}
+            source={imageUrl}
             contentFit="contain"
             style={[
               styles.image,
@@ -130,9 +133,17 @@ const Preview = () => {
         visible={isEmptyModalVisible}
         onDismiss={() => setIsEmptyModalVisible(false)}
         onAction={onRetry}
-        actionTitle="Capture Again"
+        actionTitle={
+          originScreen === "camera"
+            ? "Capture Again"
+            : "Select a Different Photo"
+        }
         title="No Objects Detected"
-        description="Try adjusting lighting, moving closer, or making sure the object is fully visible."
+        description={
+          originScreen === "camera"
+            ? "Try adjusting lighting, moving closer, or making sure the object is fully visible."
+            : "Try with a different photo."
+        }
         Icon={
           <MaterialCommunityIcons name="alert-circle" size={50} color="red" />
         }

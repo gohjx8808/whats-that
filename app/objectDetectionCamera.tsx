@@ -14,7 +14,10 @@ const ObjectDetectionCamera = () => {
 
   const takePicture = async () => {
     const result = await cameraRef.current?.takePictureAsync();
-    router.push({ pathname: "/preview", params: { imageUrl: result?.uri } });
+    router.push({
+      pathname: "/preview",
+      params: { imageUrl: result?.uri, originScreen: "camera" },
+    });
   };
 
   if (!permission) {
@@ -56,7 +59,7 @@ const ObjectDetectionCamera = () => {
         <View style={styles.controlContainer}>
           <View style={styles.closeBtnContainer}>
             <IconButton
-              onPress={() => router.replace('/')}
+              onPress={() => router.replace("/")}
               icon="close"
               size={35}
               iconColor="white"

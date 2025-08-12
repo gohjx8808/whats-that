@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     gap: 5,
-    width: "60%",
+    minWidth: "60%",
   },
   title: {
     fontWeight: "bold",
