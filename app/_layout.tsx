@@ -1,26 +1,67 @@
+import { MaterialIcons } from "@expo/vector-icons";
 import { Stack } from "expo-router";
-import { StyleSheet } from "react-native";
-import { PaperProvider, useTheme } from "react-native-paper";
+import { useEffect, useState } from "react";
+import { StyleSheet, useColorScheme } from "react-native";
+import {
+  IconButton,
+  MD3DarkTheme,
+  MD3LightTheme,
+  PaperProvider,
+} from "react-native-paper";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-export default function RootLayout() {
+const RootLayout = () => {
+  const { top } = useSafeAreaInsets();
+  const colorScheme = useColorScheme();
+
+  const [mode, setMode] = useState("light");
+
+  useEffect(() => {
+    setMode(colorScheme || "light");
+  }, [colorScheme]);
+
+  const toggleTheme = () => {
+    setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+  };
+
+  const modeTheme = mode === "dark" ? MD3DarkTheme : MD3LightTheme;
+
   return (
-    <PaperProvider>
+    <PaperProvider theme={modeTheme}>
       <Stack
         screenOptions={{
           headerShown: false,
           contentStyle: [
             styles.rootContainer,
-            { backgroundColor: useTheme().colors.background },
+            { backgroundColor: modeTheme.colors.background },
           ],
         }}
       />
+      <IconButton
+        icon={() => (
+          <MaterialIcons
+            name={mode === "dark" ? "dark-mode" : "light-mode"}
+            size={30}
+            color={modeTheme.colors.onBackground}
+          />
+        )}
+        style={[styles.themeIcon, { top: top + 5 }]}
+        size={24}
+        onPress={toggleTheme}
+      />
     </PaperProvider>
   );
-}
+};
+
+export default RootLayout;
 
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
     justifyContent: "center",
+  },
+  themeIcon: {
+    position: "absolute",
+    right: 20,
   },
 });
