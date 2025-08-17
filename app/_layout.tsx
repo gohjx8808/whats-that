@@ -1,5 +1,5 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { Stack } from "expo-router";
+import { Stack, usePathname } from "expo-router";
 import { useEffect, useState } from "react";
 import { StyleSheet, useColorScheme } from "react-native";
 import {
@@ -13,6 +13,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 const RootLayout = () => {
   const { top } = useSafeAreaInsets();
   const colorScheme = useColorScheme();
+  const path = usePathname();
 
   const [mode, setMode] = useState("light");
 
@@ -37,18 +38,20 @@ const RootLayout = () => {
           ],
         }}
       />
-      <IconButton
-        icon={() => (
-          <MaterialIcons
-            name={mode === "dark" ? "dark-mode" : "light-mode"}
-            size={30}
-            color={modeTheme.colors.onBackground}
-          />
-        )}
-        style={[styles.themeIcon, { top: top + 5 }]}
-        size={24}
-        onPress={toggleTheme}
-      />
+      {path !== "/objectDetectionCamera" && (
+        <IconButton
+          icon={() => (
+            <MaterialIcons
+              name={mode === "dark" ? "dark-mode" : "light-mode"}
+              size={30}
+              color={modeTheme.colors.onBackground}
+            />
+          )}
+          style={[styles.themeIcon, { top: top + 5 }]}
+          size={24}
+          onPress={toggleTheme}
+        />
+      )}
     </PaperProvider>
   );
 };
