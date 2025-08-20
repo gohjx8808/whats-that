@@ -1,3 +1,4 @@
+import "../i18n";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Stack, usePathname } from "expo-router";
 import { useEffect, useState } from "react";

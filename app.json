@@ -54,6 +54,15 @@
         {
           "photosPermission": "The app accesses your photos to let you detect objects within it."
         }
+      ],
+      [
+        "expo-localization",
+        {
+          "supportedLocales": {
+            "ios": ["en", "zh"],
+            "android": ["en", "zh"]
+          }
+        }
       ]
     ],
     "experiments": {

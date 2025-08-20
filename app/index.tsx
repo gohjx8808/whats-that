@@ -4,10 +4,12 @@ import {
   useMediaLibraryPermissions,
 } from "expo-image-picker";
 import { router } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
-import { Divider, HelperText, IconButton, Text } from "react-native-paper";
+import { Divider, IconButton, Text } from "react-native-paper";
 
 export default function Index() {
+  const { t } = useTranslation();
   const [status, requestPermission] = useMediaLibraryPermissions();
 
   const pickImage = async () => {
@@ -34,7 +36,7 @@ export default function Index() {
         variant="headlineMedium"
         style={[typographyStyles.boldText, typographyStyles.centerText]}
       >
-        Discover What&apos;s Around You
+        Discover What&apos;s Around You {t("test")}
       </Text>
       <Text variant="titleLarge" style={typographyStyles.centerText}>
         Snap a photo or choose one from your gallery — we&apos;ll tell you what
