@@ -3,6 +3,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { StyleSheet, View, Image as RNImage, ImageSize } from "react-native";
 import {
   Detection,
@@ -31,6 +32,7 @@ const Preview = () => {
     width: 0,
   });
   const [isEmptyModalVisible, setIsEmptyModalVisible] = useState(false);
+  const { t } = useTranslation();
 
   const { bottom } = useSafeAreaInsets();
 
@@ -59,7 +61,7 @@ const Preview = () => {
     <>
       <Appbar.Header>
         <Appbar.BackAction onPress={() => router.back()} />
-        <Appbar.Content title="Preview and Detection" />
+        <Appbar.Content title={t("PREVIEW_TITLE")} />
       </Appbar.Header>
       <View style={[styles.contentContainer, { paddingBottom: bottom }]}>
         <View style={{ flex: 1, justifyContent: "center" }}>
@@ -126,7 +128,7 @@ const Preview = () => {
           style={styles.detectButton}
           onPress={detectObject}
         >
-          Detect Object
+          {t("DETECT_OBJECT")}
         </Button>
       </View>
       <CustomModal
@@ -135,14 +137,14 @@ const Preview = () => {
         onAction={onRetry}
         actionTitle={
           originScreen === "camera"
-            ? "Capture Again"
-            : "Select a Different Photo"
+            ? t("CAPTURE_AGAIN")
+            : t("SELECT_DIFFERENT_PHOTO")
         }
-        title="No Objects Detected"
+        title={t("NO_OBJECT_DETECTED")}
         description={
           originScreen === "camera"
-            ? "Try adjusting lighting, moving closer, or making sure the object is fully visible."
-            : "Try with a different photo."
+            ? t("CAMERA_RETRY_SUGGESTION")
+            : t("GALLERY_RETRY_SUGGESTION")
         }
         Icon={
           <MaterialCommunityIcons name="alert-circle" size={50} color="red" />

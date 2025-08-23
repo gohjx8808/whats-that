@@ -1,3 +1,17 @@
 {
-    "test":"shishi"
+  "ALLOW": "允许",
+  "CAMERA_ACCESS_TITLE": "允许访问相机？",
+  "CAMERA_ACCESS_MESSAGE": "我们需要访问您的相机，以便您拍摄照片。",
+  "CAMERA_RETRY_SUGGESTION": "请尝试调整光线、靠近一些，或确保物体完全可见。",
+  "CAPTURE_AGAIN": "重新拍摄",
+  "DETECT_OBJECT": "识别物体",
+  "GALLERY_RETRY_SUGGESTION": "请尝试使用另一张照片。",
+  "MAIN_CAMERA_INTRO": "拍照识别，立刻出结果",
+  "MAIN_GALLERY_INTRO": "从相册中选择照片",
+  "MAIN_INTRODUCTION": "拍张照片或从相册选择一张——几秒钟内我们就能告诉你它是什么。",
+  "MAIN_TITLE": "探索周围事物",
+  "NO_OBJECTS_DETECTED": "没有识别到物体",
+  "NOT_NOW": "暂不",
+  "PREVIEW_TITLE": "预览与识别",
+  "SELECT_DIFFERENT_PHOTO": "选择另一张照片"
 }

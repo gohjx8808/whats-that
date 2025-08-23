@@ -2,6 +2,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import { router } from "expo-router";
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Button, Icon, IconButton, Text, useTheme } from "react-native-paper";
 
@@ -9,6 +10,7 @@ const ObjectDetectionCamera = () => {
   const [permission, requestPermission] = useCameraPermissions();
   const { colors } = useTheme();
   const isFocused = useIsFocused();
+  const { t } = useTranslation();
 
   const cameraRef = useRef<CameraView>(null);
 
@@ -35,17 +37,17 @@ const ObjectDetectionCamera = () => {
       >
         <Icon source="camera" size={100} />
         <Text style={styles.message} variant="headlineMedium">
-          Allow Camera Access?
+          {t("CAMERA_ACCESS_TITLE")}
         </Text>
         <Text style={styles.message} variant="titleMedium">
-          We need access to your camera to let you take photo.
+          {t("CAMERA_ACCESS_MESSAGE")}
         </Text>
         <View style={styles.permissionButtonContainer}>
           <Button mode="contained" onPress={requestPermission}>
-            Allow
+            {t("ALLOW")}
           </Button>
           <Button mode="outlined" onPress={() => router.back()}>
-            Not Now
+            {t("NOT_NOW")}
           </Button>
         </View>
       </View>

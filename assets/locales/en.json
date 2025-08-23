@@ -1,3 +1,17 @@
 {
-    "test":"testraaasdasdasd"
+  "ALLOW": "Allow",
+  "CAMERA_ACCESS_TITLE": "Allow Camera Access?",
+  "CAMERA_ACCESS_MESSAGE": "We need access to your camera to let you take photo.",
+  "CAMERA_RETRY_SUGGESTION": "Try adjusting lighting, moving closer, or making sure the object is fully visible.",
+  "CAPTURE_AGAIN": "Capture Again",
+  "DETECT_OBJECT": "Detect Object",
+  "GALLERY_RETRY_SUGGESTION": "Try with a different photo.",
+  "MAIN_CAMERA_INTRO": "Snap and discover instantly",
+  "MAIN_GALLERY_INTRO": "Choose an existing photo",
+  "MAIN_INTRODUCTION": "Snap a photo or choose one from your gallery — we'll tell you what it is in seconds.",
+  "MAIN_TITLE": "Discover What's Around You",
+  "NO_OBJECTS_DETECTED": "No Objects Detected",
+  "NOT_NOW": "Not Now",
+  "PREVIEW_TITLE": "Preview and Detection",
+  "SELECT_DIFFERENT_PHOTO": "Select a Different Photo"
 }

@@ -36,11 +36,10 @@ export default function Index() {
         variant="headlineMedium"
         style={[typographyStyles.boldText, typographyStyles.centerText]}
       >
-        Discover What&apos;s Around You {t("test")}
+        {t("MAIN_TITLE")}
       </Text>
       <Text variant="titleLarge" style={typographyStyles.centerText}>
-        Snap a photo or choose one from your gallery — we&apos;ll tell you what
-        it is in seconds.
+        {t("MAIN_INTRODUCTION")}
       </Text>
       <View style={styles.actionContainer}>
         <View style={styles.buttonContainer}>
@@ -50,14 +49,14 @@ export default function Index() {
             onPress={() => router.push("/objectDetectionCamera")}
           />
           <Text style={typographyStyles.italicText}>
-            Snap and discover instantly
+            {t("MAIN_CAMERA_INTRO")}
           </Text>
         </View>
         <Divider style={styles.divider} />
         <View style={styles.buttonContainer}>
           <IconButton icon="image-outline" size={100} onPress={pickImage} />
           <Text style={typographyStyles.italicText}>
-            Choose an existing photo
+            {t("MAIN_GALLERY_INTRO")}
           </Text>
         </View>
       </View>
