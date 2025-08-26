@@ -1,30 +1,12 @@
-import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
-import { Stack, usePathname } from "expo-router";
+import ThemeContext, { Mode } from "@/contexts/ThemeContext";
+import { Stack } from "expo-router";
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { StyleSheet, useColorScheme, View } from "react-native";
-import {
-  Button,
-  Divider,
-  IconButton,
-  MD3DarkTheme,
-  MD3LightTheme,
-  Menu,
-  PaperProvider,
-} from "react-native-paper";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { SUPPORTED_LANGUAGES } from "../i18n";
+import { StyleSheet, useColorScheme } from "react-native";
+import { MD3DarkTheme, MD3LightTheme, PaperProvider } from "react-native-paper";
 
 const RootLayout = () => {
-  const { top } = useSafeAreaInsets();
   const colorScheme = useColorScheme();
-  const path = usePathname();
-  const {
-    i18n: { language, changeLanguage },
-  } = useTranslation();
-
-  const [mode, setMode] = useState("light");
-  const [isLanguageSwitcherOpen, setLanguageSwitcher] = useState(false);
+  const [mode, setMode] = useState<Mode>("light");
 
   useEffect(() => {
     setMode(colorScheme || "light");
@@ -36,69 +18,20 @@ const RootLayout = () => {
 
   const modeTheme = mode === "dark" ? MD3DarkTheme : MD3LightTheme;
 
-  const onSwitchLanguage = (languageSelected: string) => {
-    changeLanguage(languageSelected);
-    setLanguageSwitcher(false);
-  };
-
   return (
-    <PaperProvider theme={modeTheme}>
-      <Stack
-        screenOptions={{
-          headerShown: false,
-          contentStyle: [
-            styles.rootContainer,
-            { backgroundColor: modeTheme.colors.background },
-          ],
-        }}
-      />
-      {path !== "/objectDetectionCamera" && (
-        <View style={[styles.actionIconContainer, { top: top + 55 }]}>
-          <Menu
-            visible={isLanguageSwitcherOpen}
-            style={{ paddingTop: 45 }}
-            contentStyle={{ borderRadius: 10 }}
-            onDismiss={() => setLanguageSwitcher(false)}
-            anchor={
-              <Button
-                mode="outlined"
-                icon={() => (
-                  <FontAwesome
-                    name="globe"
-                    size={24}
-                    color={modeTheme.colors.onBackground}
-                  />
-                )}
-                onPress={() => setLanguageSwitcher(true)}
-              >
-                {language.toLocaleUpperCase()}
-              </Button>
-            }
-          >
-            {SUPPORTED_LANGUAGES.map((language, index) => (
-              <>
-                <Menu.Item
-                  onPress={() => onSwitchLanguage(language.value)}
-                  title={language.label}
-                />
-                {index < SUPPORTED_LANGUAGES.length - 1 && <Divider />}
-              </>
-            ))}
-          </Menu>
-          <IconButton
-            icon={() => (
-              <MaterialIcons
-                name={mode === "dark" ? "dark-mode" : "light-mode"}
-                size={30}
-                color={modeTheme.colors.onBackground}
-              />
-            )}
-            size={24}
-            onPress={toggleTheme}
-          />
-        </View>
-      )}
-    </PaperProvider>
+    <ThemeContext value={{ mode, setMode: toggleTheme }}>
+      <PaperProvider theme={modeTheme}>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            contentStyle: [
+              styles.rootContainer,
+              { backgroundColor: modeTheme.colors.background },
+            ],
+          }}
+        />
+      </PaperProvider>
+    </ThemeContext>
   );
 };
 
