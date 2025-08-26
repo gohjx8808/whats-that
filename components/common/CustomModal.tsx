@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 import { Button, Modal, Portal, Text, useTheme } from "react-native-paper";
 
@@ -24,6 +25,8 @@ const CustomModal = (props: CustomModalProps) => {
 
   const { colors } = useTheme();
 
+  const { t } = useTranslation();
+
   return (
     <Portal>
       <Modal
@@ -49,7 +52,7 @@ const CustomModal = (props: CustomModalProps) => {
               {actionTitle}
             </Button>
           )}
-          <Button onPress={onDismiss}>Close</Button>
+          <Button onPress={onDismiss}>{t("CLOSE")}</Button>
         </View>
       </Modal>
     </Portal>

@@ -140,7 +140,7 @@ const Preview = () => {
             ? t("CAPTURE_AGAIN")
             : t("SELECT_DIFFERENT_PHOTO")
         }
-        title={t("NO_OBJECT_DETECTED")}
+        title={t("NO_OBJECTS_DETECTED")}
         description={
           originScreen === "camera"
             ? t("CAMERA_RETRY_SUGGESTION")

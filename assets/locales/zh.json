@@ -4,6 +4,7 @@
   "CAMERA_ACCESS_MESSAGE": "我们需要访问您的相机，以便您拍摄照片。",
   "CAMERA_RETRY_SUGGESTION": "请尝试调整光线、靠近一些，或确保物体完全可见。",
   "CAPTURE_AGAIN": "重新拍摄",
+  "CLOSE": "关闭",
   "DETECT_OBJECT": "识别物体",
   "GALLERY_RETRY_SUGGESTION": "请尝试使用另一张照片。",
   "MAIN_CAMERA_INTRO": "拍照识别，立刻出结果",

@@ -4,6 +4,16 @@ import * as i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import { getLocales } from "expo-localization";
 
+interface language {
+  value: string;
+  label: string;
+}
+
+export const SUPPORTED_LANGUAGES: language[] = [
+  { value: "en", label: "🇬🇧 English" },
+  { value: "zh", label: "🇨🇳 中文" },
+];
+
 const resources = {
   en: { translation: en },
   zh: { translation: zh },
