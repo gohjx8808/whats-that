@@ -5,27 +5,34 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View, Image as RNImage, ImageSize } from "react-native";
-import {
-  Detection,
-  SSDLITE_320_MOBILENET_V3_LARGE,
-  useObjectDetection,
-} from "react-native-executorch";
 import { Appbar, Button, Text } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+interface YoloResponse {
+  name: string;
+  class: number;
+  confidence: number;
+  box: {
+    x1: number;
+    y1: number;
+    x2: number;
+    y2: number;
+  };
+}
+
 const Preview = () => {
-  const { imageUrl, originScreen } = useLocalSearchParams<{
-    imageUrl: string;
-    originScreen: "camera" | "gallery";
-  }>();
+  const { imageUrl, originScreen, fileName, fileMimeType } =
+    useLocalSearchParams<{
+      imageUrl: string;
+      fileMimeType: string;
+      fileName: string;
+      originScreen: "camera" | "gallery";
+    }>();
   // const test =
   //   "https://i.guim.co.uk/img/media/327aa3f0c3b8e40ab03b4ae80319064e401c6fbc/377_133_3542_2834/master/3542.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=34d32522f47e4a67286f9894fc81c863";
-  const ssdLite = useObjectDetection({
-    modelSource: SSDLITE_320_MOBILENET_V3_LARGE,
-  });
 
   const [scale, setScale] = useState({ height: 0, width: 0 });
-  const [detectResult, setDetectResult] = useState<Detection[]>([]);
+  const [detectResult, setDetectResult] = useState<YoloResponse[]>([]);
   const [renderedTopPadding, setRenderedTopPadding] = useState(0);
   const [actualImageDimension, setActualImageDimension] = useState<ImageSize>({
     height: 0,
@@ -45,11 +52,34 @@ const Preview = () => {
   }, [imageUrl]);
 
   const detectObject = async () => {
-    const detection = await ssdLite.forward(imageUrl);
-    if (detection.length === 0) {
-      setIsEmptyModalVisible(true);
+    const formData = new FormData();
+    formData.append("file", {
+      uri: imageUrl,
+      name: "abc.jpeg",
+      type: "image/jpeg",
+    } as any);
+
+    try {
+      const response = await fetch(
+        "http://10.0.2.2:8000/object-detection/detect",
+        {
+          method: "POST",
+
+          body: formData,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      const results = await response.json();
+      if (results.length === 0) {
+        setIsEmptyModalVisible(true);
+      }
+      setDetectResult(results);
+    } catch (error) {
+      console.error(error);
     }
-    setDetectResult(detection);
   };
 
   const onRetry = () => {
@@ -87,7 +117,7 @@ const Preview = () => {
           />
         </View>
         {detectResult.map((det, index) => {
-          const { x1, x2, y1, y2 } = det.bbox;
+          const { x1, x2, y1, y2 } = det.box;
           const box = {
             x: x1 * scale.width,
             y: y1 * scale.height,
@@ -118,7 +148,7 @@ const Preview = () => {
                   paddingVertical: 1,
                 }}
               >
-                {`${det.label} (${(det.score * 100).toFixed(1)}%)`}
+                {`${det.name} (${(det.confidence * 100).toFixed(1)}%)`}
               </Text>
             </View>
           );
