@@ -20,16 +20,13 @@ interface YoloResponse {
   };
 }
 
+type PreviewParams = {
+  imageUrl: string;
+  originScreen: "camera" | "gallery";
+};
+
 const Preview = () => {
-  const { imageUrl, originScreen, fileName, fileMimeType } =
-    useLocalSearchParams<{
-      imageUrl: string;
-      fileMimeType: string;
-      fileName: string;
-      originScreen: "camera" | "gallery";
-    }>();
-  // const test =
-  //   "https://i.guim.co.uk/img/media/327aa3f0c3b8e40ab03b4ae80319064e401c6fbc/377_133_3542_2834/master/3542.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=34d32522f47e4a67286f9894fc81c863";
+  const { imageUrl, originScreen } = useLocalSearchParams<PreviewParams>();
 
   const [scale, setScale] = useState({ height: 0, width: 0 });
   const [detectResult, setDetectResult] = useState<YoloResponse[]>([]);
@@ -39,6 +36,7 @@ const Preview = () => {
     width: 0,
   });
   const [isEmptyModalVisible, setIsEmptyModalVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
 
   const { bottom } = useSafeAreaInsets();
@@ -52,11 +50,15 @@ const Preview = () => {
   }, [imageUrl]);
 
   const detectObject = async () => {
+    setIsLoading(true);
+    const parts = imageUrl.split("/");
+    const filename = parts[parts.length - 1];
+
     const formData = new FormData();
     formData.append("file", {
       uri: imageUrl,
-      name: "abc.jpeg",
-      type: "image/jpeg",
+      name: filename,
+      type: `image/${filename.split(".").pop()}`,
     } as any);
 
     try {
@@ -77,8 +79,10 @@ const Preview = () => {
         setIsEmptyModalVisible(true);
       }
       setDetectResult(results);
+      setIsLoading(false);
     } catch (error) {
       console.error(error);
+      setIsLoading(false);
     }
   };
 
@@ -157,6 +161,8 @@ const Preview = () => {
           mode="contained"
           style={styles.detectButton}
           onPress={detectObject}
+          loading={isLoading}
+          disabled={isLoading}
         >
           {t("DETECT_OBJECT")}
         </Button>
