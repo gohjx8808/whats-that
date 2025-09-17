@@ -9,7 +9,8 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.gohjx8808.whatsthat"
     },
     "android": {
       "adaptiveIcon": {
@@ -18,8 +19,6 @@
       },
       "edgeToEdgeEnabled": true,
       "permissions": [
-        "android.permission.CAMERA",
-        "android.permission.RECORD_AUDIO",
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
       ],
@@ -59,8 +58,14 @@
         "expo-localization",
         {
           "supportedLocales": {
-            "ios": ["en", "zh"],
-            "android": ["en", "zh"]
+            "ios": [
+              "en",
+              "zh"
+            ],
+            "android": [
+              "en",
+              "zh"
+            ]
           }
         }
       ]

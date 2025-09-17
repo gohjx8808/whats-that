@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { StyleSheet, View, Image as RNImage, ImageSize } from "react-native";
 import { Appbar, Button, Text } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Config from "react-native-config";
 
 interface YoloResponse {
   name: string;
@@ -63,7 +64,7 @@ const Preview = () => {
 
     try {
       const response = await fetch(
-        "http://10.0.2.2:8000/object-detection/detect",
+        `${Config.API_URL}/object-detection/detect`,
         {
           method: "POST",
 
