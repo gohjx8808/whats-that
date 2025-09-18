@@ -56,7 +56,9 @@ const ObjectDetectionCamera = () => {
 
   return (
     <View style={styles.container}>
-      {isFocused && <CameraView style={styles.camera} ref={cameraRef} />}
+      {isFocused && (
+        <CameraView ratio="4:3" style={styles.camera} ref={cameraRef} />
+      )}
       <View style={StyleSheet.absoluteFill}>
         <View style={styles.controlContainer}>
           <View style={styles.closeBtnContainer}>
