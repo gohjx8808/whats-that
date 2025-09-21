@@ -60,11 +60,11 @@
           "supportedLocales": {
             "ios": [
               "en",
-              "zh"
+              "zh-CN"
             ],
             "android": [
               "en",
-              "zh"
+              "zh-CN"
             ]
           }
         }

@@ -38,7 +38,10 @@ const Preview = () => {
   });
   const [isEmptyModalVisible, setIsEmptyModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { t } = useTranslation();
+  const {
+    t,
+    i18n: { language },
+  } = useTranslation();
 
   const { bottom } = useSafeAreaInsets();
 
@@ -61,6 +64,7 @@ const Preview = () => {
       name: filename,
       type: `image/${filename.split(".").pop()}`,
     } as any);
+    formData.append("lang", language);
 
     try {
       const response = await fetch(

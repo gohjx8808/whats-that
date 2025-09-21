@@ -1,5 +1,5 @@
 import en from "./assets/locales/en.json";
-import zh from "./assets/locales/zh.json";
+import zhCN from "./assets/locales/zh-CN.json";
 import * as i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import { getLocales } from "expo-localization";
@@ -11,12 +11,12 @@ interface language {
 
 export const SUPPORTED_LANGUAGES: language[] = [
   { value: "en", label: "🇬🇧 English" },
-  { value: "zh", label: "🇨🇳 中文" },
+  { value: "zh-CN", label: "🇨🇳 中文" },
 ];
 
 const resources = {
   en: { translation: en },
-  zh: { translation: zh },
+  "zh-CN": { translation: zhCN },
 };
 
 i18n.use(initReactI18next).init({
@@ -26,7 +26,7 @@ i18n.use(initReactI18next).init({
   interpolation: {
     escapeValue: false, // react already safes from xss
   },
-  supportedLngs: ["en", "zh"], // supported languages
+  supportedLngs: ["en", "zh-CN"], // supported languages
 });
 
 export default i18n;

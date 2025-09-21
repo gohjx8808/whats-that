@@ -1,7 +1,7 @@
 import typographyStyles from "@/assets/styles/typographyStyles";
 import ThemeContext from "@/contexts/ThemeContext";
 import { SUPPORTED_LANGUAGES } from "@/i18n";
-import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import {
   launchImageLibraryAsync,
   useMediaLibraryPermissions,
@@ -65,16 +65,12 @@ export default function Index() {
           anchor={
             <Button
               contentStyle={{ backgroundColor: colors.background }}
-              icon={() => (
-                <FontAwesome
-                  name="globe"
-                  size={24}
-                  color={colors.onBackground}
-                />
-              )}
               onPress={() => setLanguageSwitcher(true)}
             >
-              {language.toLocaleUpperCase()}
+              {
+                SUPPORTED_LANGUAGES.find((lang) => lang.value === language)
+                  ?.label
+              }
             </Button>
           }
         >
