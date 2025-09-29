@@ -1,16 +1,18 @@
+import { Ionicons } from "@expo/vector-icons";
 import { useIsFocused } from "@react-navigation/native";
-import { CameraView, useCameraPermissions } from "expo-camera";
+import { CameraType, CameraView, useCameraPermissions } from "expo-camera";
 import { router } from "expo-router";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { Button, Icon, IconButton, Text, useTheme } from "react-native-paper";
+import { Pressable, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Button, Icon, Text, useTheme } from "react-native-paper";
 
 const ObjectDetectionCamera = () => {
   const [permission, requestPermission] = useCameraPermissions();
   const { colors } = useTheme();
   const isFocused = useIsFocused();
   const { t } = useTranslation();
+  const [cameraFacing, setCameraFacing] = useState<CameraType>("back");
 
   const cameraRef = useRef<CameraView>(null);
 
@@ -57,18 +59,30 @@ const ObjectDetectionCamera = () => {
   return (
     <View style={styles.container}>
       {isFocused && (
-        <CameraView ratio="4:3" style={styles.camera} ref={cameraRef} />
+        <CameraView
+          ratio="4:3"
+          facing={cameraFacing}
+          style={styles.camera}
+          ref={cameraRef}
+        />
       )}
       <View style={StyleSheet.absoluteFill}>
         <View style={styles.controlContainer}>
-          <View style={styles.closeBtnContainer}>
-            <IconButton
+          <View style={styles.topControlContainer}>
+            <Pressable
+              onPress={() =>
+                setCameraFacing((prev) => (prev === "back" ? "front" : "back"))
+              }
+              style={styles.actionButtonContainer}
+            >
+              <Ionicons name="camera-reverse-outline" color="white" size={25} />
+            </Pressable>
+            <Pressable
               onPress={() => router.replace("/")}
-              icon="close"
-              size={35}
-              iconColor="white"
-              containerColor="#00000080"
-            />
+              style={styles.actionButtonContainer}
+            >
+              <Ionicons name="close" color="white" size={25} />
+            </Pressable>
           </View>
           <TouchableOpacity onPress={takePicture} style={styles.snapButton}>
             <Icon source="circle" size={70} color="white" />
@@ -118,8 +132,15 @@ const styles = StyleSheet.create({
     borderWidth: 4,
     borderRadius: 100,
   },
-  closeBtnContainer: {
+  topControlContainer: {
     width: "100%",
-    alignItems: "flex-end",
+    justifyContent: "flex-end",
+    flexDirection: "row",
+    gap: 15,
+  },
+  actionButtonContainer: {
+    backgroundColor: "#00000080",
+    padding: 10,
+    borderRadius: 30,
   },
 });
