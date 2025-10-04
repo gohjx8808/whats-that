@@ -19,6 +19,7 @@ import {
   useTheme,
 } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { ImageManipulator, SaveFormat } from "expo-image-manipulator";
 
 export default function Index() {
   const { top } = useSafeAreaInsets();
@@ -31,6 +32,8 @@ export default function Index() {
   const [status, requestPermission] = useMediaLibraryPermissions();
   const [isLanguageSwitcherOpen, setLanguageSwitcher] = useState(false);
 
+  const acceptedImageExtensions = [".jpg", ".jpeg", ".png"];
+
   const pickImage = async () => {
     let permissionGranted = status?.granted;
     if (!permissionGranted) {
@@ -41,9 +44,20 @@ export default function Index() {
       const result = await launchImageLibraryAsync();
 
       if (!result.canceled) {
+        let imageUri = result.assets[0].uri;
+
+        const shouldManipulate = !acceptedImageExtensions.some((extension) =>
+          imageUri.endsWith(extension)
+        );
+        if (shouldManipulate) {
+          const context = ImageManipulator.manipulate(imageUri);
+          const imageRef = await context.renderAsync();
+          imageUri = (await imageRef.saveAsync({ format: SaveFormat.PNG })).uri;
+        }
+
         router.push({
           pathname: "/preview",
-          params: { imageUrl: result.assets[0].uri, originScreen: "gallery" },
+          params: { imageUrl: imageUri, originScreen: "gallery" },
         });
       }
     }
