@@ -7,6 +7,7 @@
   "CLOSE": "关闭",
   "DETECT_OBJECT": "识别物体",
   "GALLERY_RETRY_SUGGESTION": "请尝试使用另一张照片。",
+  "IMAGE_PROCESSING": "我们正在准备您的图像，请稍候...",
   "MAIN_CAMERA_INTRO": "拍照识别，立刻出结果",
   "MAIN_GALLERY_INTRO": "从相册中选择照片",
   "MAIN_INTRODUCTION": "拍张照片或从相册选择一张——几秒钟内我们就能告诉你它是什么。",
