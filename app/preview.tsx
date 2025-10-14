@@ -1,13 +1,13 @@
-import { CustomModal } from "@/components/common";
+import { CustomModal } from "@/components/modals";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { StyleSheet, View, Image as RNImage, ImageSize } from "react-native";
+import { ImageSize, Image as RNImage, StyleSheet, View } from "react-native";
+import Config from "react-native-config";
 import { Appbar, Button, Text } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Config from "react-native-config";
 
 interface YoloResponse {
   name: string;
@@ -93,7 +93,7 @@ const Preview = () => {
 
   const onRetry = () => {
     setIsEmptyModalVisible(false);
-    router.push(originScreen === "camera" ? "/objectDetectionCamera" : "/");
+    router.push(originScreen === "camera" ? "/ObjectDetectionCamera" : "/");
   };
 
   return (

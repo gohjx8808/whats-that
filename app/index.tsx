@@ -20,7 +20,7 @@ import {
 } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ImageManipulator, SaveFormat } from "expo-image-manipulator";
-import { ImageManipulatingModal } from "@/components/common";
+import { ImageManipulatingModal } from "@/components/modals";
 
 export default function Index() {
   const { top } = useSafeAreaInsets();
@@ -60,7 +60,7 @@ export default function Index() {
         }
 
         router.push({
-          pathname: "/preview",
+          pathname: "/Preview",
           params: { imageUrl: imageUri, originScreen: "gallery" },
         });
       }
@@ -130,7 +130,7 @@ export default function Index() {
             <IconButton
               icon="camera"
               size={100}
-              onPress={() => router.push("/objectDetectionCamera")}
+              onPress={() => router.push("/ObjectDetectionCamera")}
             />
             <Text style={typographyStyles.italicText}>
               {t("MAIN_CAMERA_INTRO")}
